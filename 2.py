@@ -1,76 +1,55 @@
 import numpy as np
-import pandas as pd
 
-# Perceptron class with Gradient Descent
-class PerceptronGD:
-    def __init__(self, input_size, learning_rate=0.01, epochs=1000):
-        self.weights = np.zeros(input_size)  # Initialize weights as zeros
-        self.bias = 0  # Initialize bias as 0
-        self.learning_rate = learning_rate
-        self.epochs = epochs
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
 
-    # Activation function (Step function)
-    def activation(self, x):
-        return 1 if x >= 0 else 0
+def sigmoid_derivative(x):
+    return x * (1 - x)
 
-    # Compute predictions for inputs X
-    def predict(self, X):
-        return np.array([self.activation(np.dot(inputs, self.weights) + self.bias) for inputs in X])
+def forward(X, W1, b1, W2, b2):
+    hidden_input = np.dot(X, W1) + b1
+    hidden_output = sigmoid(hidden_input)
+    final_input = np.dot(hidden_output, W2) + b2
+    final_output = sigmoid(final_input)
+    return hidden_output, final_output
 
-    # Training the perceptron using Gradient Descent
-    def train(self, X, y):
-        for _ in range(self.epochs):
-            for inputs, label in zip(X, y):
-                weighted_sum = np.dot(inputs, self.weights) + self.bias
-                prediction = self.activation(weighted_sum)
-                error = label - prediction
+def backward(X, y, W1, b1, W2, b2, hidden_output, final_output, lr):
+    error = y - final_output
+    d_output = error * sigmoid_derivative(final_output)
+    d_hidden = d_output.dot(W2.T) * sigmoid_derivative(hidden_output)
+    
+    W2 += hidden_output.T.dot(d_output) * lr
+    b2 += np.sum(d_output, axis=0, keepdims=True) * lr
+    W1 += X.T.dot(d_hidden) * lr
+    b1 += np.sum(d_hidden, axis=0, keepdims=True) * lr
+    
+    return W1, b1, W2, b2
 
-                # Gradient descent update rule
-                self.weights += self.learning_rate * error * inputs
-                self.bias += self.learning_rate * error
+def train_mlp(X, y, hidden_neurons=2, epochs=10000, lr=0.5):
+    np.random.seed(42)
+    input_neurons, output_neurons = X.shape[1], 1
+    W1 = np.random.uniform(-1, 1, (input_neurons, hidden_neurons))
+    b1 = np.zeros((1, hidden_neurons))
+    W2 = np.random.uniform(-1, 1, (hidden_neurons, output_neurons))
+    b2 = np.zeros((1, output_neurons))
+    
+    for _ in range(epochs):
+        hidden_output, final_output = forward(X, W1, b1, W2, b2)
+        W1, b1, W2, b2 = backward(X, y, W1, b1, W2, b2, hidden_output, final_output, lr)
+    
+    return W1, b1, W2, b2
 
-    # Convert to a more Pandas-friendly format for easy manipulation
-    def train_pandas(self, X, y):
-        data = pd.DataFrame(X, columns=[f'feature_{i}' for i in range(X.shape[1])])
-        data['label'] = y
+def predict(X, W1, b1, W2, b2):
+    _, final_output = forward(X, W1, b1, W2, b2)
+    return np.round(final_output)
 
-        for _ in range(self.epochs):
-            for index, row in data.iterrows():
-                inputs = row.drop('label').values
-                label = row['label']
-                weighted_sum = np.dot(inputs, self.weights) + self.bias
-                prediction = self.activation(weighted_sum)
-                error = label - prediction
+# XOR dataset
+X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+y = np.array([[0], [1], [1], [0]])
 
-                # Gradient descent update rule
-                self.weights += self.learning_rate * error * inputs
-                self.bias += self.learning_rate * error
+# Train MLP
+W1, b1, W2, b2 = train_mlp(X, y)
 
-# Example usage
-if __name__ == "__main__":
-    # Training data (AND logic gate)
-    X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-    y = np.array([0, 0, 0, 1])
-
-    # Create and train the perceptron using Gradient Descent
-    perceptron_gd = PerceptronGD(input_size=2)
-    perceptron_gd.train(X, y)  # Standard training using NumPy
-
-    # Test the perceptron
-    test_input = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-    predictions = perceptron_gd.predict(test_input)
-
-    print("Predictions using NumPy:")
-    for i, prediction in enumerate(predictions):
-        print(f"Input: {test_input[i]} => Prediction: {prediction}")
-
-    # Create and train the perceptron using Gradient Descent with Pandas
-    perceptron_gd_pandas = PerceptronGD(input_size=2)
-    perceptron_gd_pandas.train_pandas(X, y)  # Training using Pandas
-
-    # Test the perceptron with Pandas approach
-    predictions_pandas = perceptron_gd_pandas.predict(test_input)
-
-    print("\nPredictions using Pandas:")
-    for i, prediction in enumerate(predictions_pandas):
-        print(f"Input: {test_input[i]} => Prediction: {prediction}")
+# Test MLP
+predictions = predict(X, W1, b1, W2, b2)
+print("Predictions:", predictions.flatten())
