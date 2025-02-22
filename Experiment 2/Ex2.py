@@ -1,55 +1,58 @@
 import numpy as np
 
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
+class Perceptron:
+    def __init__(self, input_size, learning_rate=0.1, epochs=100):
+        self.weights = np.random.rand(input_size + 1)  # Including bias
+        self.learning_rate = learning_rate
+        self.epochs = epochs
 
-def sigmoid_derivative(x):
-    return x * (1 - x)
+    def activation(self, x):
+        """Step activation function"""
+        return 1 if x >= 0 else 0
 
-def forward(X, W1, b1, W2, b2):
-    hidden_input = np.dot(X, W1) + b1
-    hidden_output = sigmoid(hidden_input)
-    final_input = np.dot(hidden_output, W2) + b2
-    final_output = sigmoid(final_input)
-    return hidden_output, final_output
+    def predict(self, x):
+        """Predict output for given input"""
+        x = np.insert(x, 0, 1)  # Add bias
+        return self.activation(np.dot(self.weights, x))
 
-def backward(X, y, W1, b1, W2, b2, hidden_output, final_output, lr):
-    error = y - final_output
-    d_output = error * sigmoid_derivative(final_output)
-    d_hidden = d_output.dot(W2.T) * sigmoid_derivative(hidden_output)
-    
-    W2 += hidden_output.T.dot(d_output) * lr
-    b2 += np.sum(d_output, axis=0, keepdims=True) * lr
-    W1 += X.T.dot(d_hidden) * lr
-    b1 += np.sum(d_hidden, axis=0, keepdims=True) * lr
-    
-    return W1, b1, W2, b2
+    def train(self, X, Y):
+        """Train perceptron using Perceptron Learning Algorithm"""
+        for _ in range(self.epochs):
+            for i in range(len(X)):
+                x_i = np.insert(X[i], 0, 1)  # Add bias
+                y_pred = self.activation(np.dot(self.weights, x_i))
+                error = Y[i] - y_pred
+                self.weights += self.learning_rate * error * x_i  # Update weights
 
-def train_mlp(X, y, hidden_neurons=2, epochs=10000, lr=0.5):
-    np.random.seed(42)
-    input_neurons, output_neurons = X.shape[1], 1
-    W1 = np.random.uniform(-1, 1, (input_neurons, hidden_neurons))
-    b1 = np.zeros((1, hidden_neurons))
-    W2 = np.random.uniform(-1, 1, (hidden_neurons, output_neurons))
-    b2 = np.zeros((1, output_neurons))
-    
-    for _ in range(epochs):
-        hidden_output, final_output = forward(X, W1, b1, W2, b2)
-        W1, b1, W2, b2 = backward(X, y, W1, b1, W2, b2, hidden_output, final_output, lr)
-    
-    return W1, b1, W2, b2
+# XOR Dataset
+X_XOR = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+Y_XOR = np.array([0, 1, 1, 0])  # XOR outputs
 
-def predict(X, W1, b1, W2, b2):
-    _, final_output = forward(X, W1, b1, W2, b2)
-    return np.round(final_output)
+# Train two perceptrons for the hidden layer
+perceptron_nand = Perceptron(input_size=2)
+perceptron_nand.train(X_XOR, np.array([1, 1, 1, 0]))  # NAND function
 
-# XOR dataset
-X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-y = np.array([[0], [1], [1], [0]])
+perceptron_or = Perceptron(input_size=2)
+perceptron_or.train(X_XOR, np.array([0, 1, 1, 1]))  # OR function
 
-# Train MLP
-W1, b1, W2, b2 = train_mlp(X, y)
+# Train the output perceptron that combines NAND & OR results
+hidden_outputs = np.array([[perceptron_nand.predict(x), perceptron_or.predict(x)] for x in X_XOR])
+perceptron_and = Perceptron(input_size=2)
+perceptron_and.train(hidden_outputs, Y_XOR)  # AND function on hidden outputs
 
-# Test MLP
-predictions = predict(X, W1, b1, W2, b2)
-print("Predictions:", predictions.flatten())
+# XOR prediction function using 3 perceptrons
+def xor_using_perceptrons(x):
+    nand_out = perceptron_nand.predict(x)
+    or_out = perceptron_or.predict(x)
+    xor_out = perceptron_and.predict([nand_out, or_out])  # Final AND output
+    return xor_out
+
+# Evaluate XOR function
+correct_predictions = 0
+for x, y in zip(X_XOR, Y_XOR):
+    pred = xor_using_perceptrons(x)
+    print(f"Input: {x}, XOR Prediction: {pred}, Actual: {y}")
+    correct_predictions += int(pred == y)
+
+accuracy = (correct_predictions / len(Y_XOR)) * 100
+print(f"\nXOR Perceptron Accuracy: {accuracy:.2f}%")
