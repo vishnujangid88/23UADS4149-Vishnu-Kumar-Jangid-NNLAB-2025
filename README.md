@@ -1,10 +1,10 @@
 # Neural Network Laboratory Record
 
-**B.E. (AI & DS) VI Semester**
+## B.E. (AI & DS) VI Semester
 
-**Roll no. - 23UADS4149**
+## Roll no. - 23UADS4149
 
-**Name - Vishnu Kumar Jangid**
+## Name - Vishnu Kumar Jangid
 
 
 
