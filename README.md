@@ -19,5 +19,6 @@
 
 
 **Datasets:**
- from tensorflow.keras.datasets import mnist
- from tensorflow.keras.datasets import fashion_mnist(https://github.com/zalandoresearch/fashion-mnist)
+
+1. from tensorflow.keras.datasets import mnist
+2. from tensorflow.keras.datasets import fashion_mnist(https://github.com/zalandoresearch/fashion-mnist)
