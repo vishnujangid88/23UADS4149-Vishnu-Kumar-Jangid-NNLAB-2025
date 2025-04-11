@@ -16,3 +16,8 @@
  5. WAP to train and evaluate a convolutional neural network using Keras Library to classify MNIST fashion dataset. Demonstrate the effect of filter size, regularization, batch size and optimization algorithm on model performance. 
  6. WAP to train and evaluate a Recurrent Neural Network using PyTorch Library to predict the next value in a sample time series dataset. 
  7. WAP to retrain a pretrained imagenet model to classify a medical image dataset.
+
+
+**Datasets:**
+ from tensorflow.keras.datasets import mnist
+ from tensorflow.keras.datasets import fashion_mnist(https://github.com/zalandoresearch/fashion-mnist)
