@@ -1,0 +1,68 @@
+3-Layer NN using Tensorflow
+
+1.	Objective:
+Write a Program to implement a three-layer neural network using Tensor flow library (only, no keras) to classify MNIST handwritten digits dataset. Demonstrate the implementation of feed-forward and back-propagation approaches.
+
+
+2.	Description of the model:
+This program implements a three-layer fully connected neural network using TensorFlow (without Keras) to classify the MNIST handwritten digits dataset. The model follows a feed-forward neural network architecture with backpropagation for training.
+-	Input layer (784 neurons), the input consists of 28x28 grayscale images.
+-	Hidden layer 1 (128 neurons).
+-	Hidden layer 2 (64 neurons).
+-	Output layer ( 10 neurons), gives output of numbers between 0-9.
+Tensorflow - TensorFlow is an open-source machine learning and deep learning library developed by Google. It is widely used for building neural networks and training AI models efficiently.
+ReLU is used as an activation function.
+
+
+3.	Description of the code:
+-	Importing the libraries (numpy and tensorflow)
+-	Importing the MNIST dataset which contains images of handwritten numbers.
+-	Data is reshaped (28x28 matrix in the 1D vector of size 784), normalizing pixel values (0-255 to 0-1), and encoding (one-hot encoding).
+-	Network parameters like the number of neurons in each layer, learning rate, epochs, and batch size are defined.
+-	Weights and biases are defined for each layer (W = list of each layer’s weights , B = list of each layer’s biases).
+-	Froward propagation function to find output of each layer:
+              Zi = Wi.X + Bi
+-	Loss function calculates the difference between predicted and actual values.
+-	Backpropagation is used for updating weights.
+-	Finally the model is trained and evaluated.
+
+
+4.	Output:
+
+      Epoch 1, Loss: 0.1481, Train Accuracy: 95.48, Test Accuracy: 95.27
+      Epoch 2, Loss: 0.1206, Train Accuracy: 96.07, Test Accuracy: 95.58
+      Epoch 3, Loss: 0.0788, Train Accuracy: 97.48, Test Accuracy: 96.54
+      Epoch 4, Loss: 0.0914, Train Accuracy: 97.02, Test Accuracy: 95.77
+      Epoch 5, Loss: 0.0664, Train Accuracy: 97.91, Test Accuracy: 96.80
+      Epoch 6, Loss: 0.0650, Train Accuracy: 97.87, Test Accuracy: 96.79
+      Epoch 7, Loss: 0.0677, Train Accuracy: 97.76, Test Accuracy: 96.40
+      Epoch 8, Loss: 0.0773, Train Accuracy: 97.49, Test Accuracy: 96.16
+      Epoch 9, Loss: 0.0548, Train Accuracy: 98.21, Test Accuracy: 96.81
+      Epoch 10, Loss: 0.0654, Train Accuracy: 97.85, Test Accuracy: 96.19
+      Epoch 11, Loss: 0.0409, Train Accuracy: 98.57, Test Accuracy: 97.00
+      Epoch 12, Loss: 0.0381, Train Accuracy: 98.72, Test Accuracy: 96.99
+      Epoch 13, Loss: 0.0335, Train Accuracy: 98.89, Test Accuracy: 97.00
+      Epoch 14, Loss: 0.0241, Train Accuracy: 99.19, Test Accuracy: 97.18
+      Epoch 15, Loss: 0.0293, Train Accuracy: 98.98, Test Accuracy: 97.14
+      Epoch 16, Loss: 0.0316, Train Accuracy: 98.95, Test Accuracy: 97.17
+      Epoch 17, Loss: 0.0264, Train Accuracy: 99.12, Test Accuracy: 97.14
+      Epoch 18, Loss: 0.0305, Train Accuracy: 98.99, Test Accuracy: 96.92
+      Epoch 19, Loss: 0.0215, Train Accuracy: 99.28, Test Accuracy: 97.51
+      Epoch 20, Loss: 0.0275, Train Accuracy: 99.08, Test Accuracy: 97.24
+      Final Train Accuracy: 99.08
+      Final Test Accuracy: 97.24
+      Training Complete!
+
+      ![alt text](image.png)
+      ![alt text](image-1.png)
+
+
+5.	Performance:
+-	The accuracy of the model is 90%.
+-	The loss reduces over the 20 epochs.
+
+
+6.	My comments:
+-	The model achieved high classification accuracy.
+-	It uses a simple three-layer Neural Network with a ReLU activation function.
+-	It has fully connected layers, requires more parameters, making it less effective and, more memory-intensive.
