@@ -28,27 +28,33 @@ ReLU is used as an activation function.
 
 
 4.	Output:
-      Epoch 1, Loss: 2.2877
-      Epoch 2, Loss: 2.2343
-      Epoch 3, Loss: 2.1234
-      Epoch 4, Loss: 1.9871
-      Epoch 5, Loss: 1.8813
-      Epoch 6, Loss: 1.8269
-      Epoch 7, Loss: 1.7605
-      Epoch 8, Loss: 1.6965
-      Epoch 9, Loss: 1.6628
-      Epoch 10, Loss: 1.6416
-      Epoch 11, Loss: 1.6268
-      Epoch 12, Loss: 1.6157
-      Epoch 13, Loss: 1.6071
-      Epoch 14, Loss: 1.6002
-      Epoch 15, Loss: 1.5945
-      Epoch 16, Loss: 1.5896
-      Epoch 17, Loss: 1.5855
-      Epoch 18, Loss: 1.5819
-      Epoch 19, Loss: 1.5788
-      Epoch 20, Loss: 1.5760
-      Test Accuracy: 90.98%
+
+      Epoch 1, Loss: 0.1481, Train Accuracy: 95.48, Test Accuracy: 95.27
+      Epoch 2, Loss: 0.1206, Train Accuracy: 96.07, Test Accuracy: 95.58
+      Epoch 3, Loss: 0.0788, Train Accuracy: 97.48, Test Accuracy: 96.54
+      Epoch 4, Loss: 0.0914, Train Accuracy: 97.02, Test Accuracy: 95.77
+      Epoch 5, Loss: 0.0664, Train Accuracy: 97.91, Test Accuracy: 96.80
+      Epoch 6, Loss: 0.0650, Train Accuracy: 97.87, Test Accuracy: 96.79
+      Epoch 7, Loss: 0.0677, Train Accuracy: 97.76, Test Accuracy: 96.40
+      Epoch 8, Loss: 0.0773, Train Accuracy: 97.49, Test Accuracy: 96.16
+      Epoch 9, Loss: 0.0548, Train Accuracy: 98.21, Test Accuracy: 96.81
+      Epoch 10, Loss: 0.0654, Train Accuracy: 97.85, Test Accuracy: 96.19
+      Epoch 11, Loss: 0.0409, Train Accuracy: 98.57, Test Accuracy: 97.00
+      Epoch 12, Loss: 0.0381, Train Accuracy: 98.72, Test Accuracy: 96.99
+      Epoch 13, Loss: 0.0335, Train Accuracy: 98.89, Test Accuracy: 97.00
+      Epoch 14, Loss: 0.0241, Train Accuracy: 99.19, Test Accuracy: 97.18
+      Epoch 15, Loss: 0.0293, Train Accuracy: 98.98, Test Accuracy: 97.14
+      Epoch 16, Loss: 0.0316, Train Accuracy: 98.95, Test Accuracy: 97.17
+      Epoch 17, Loss: 0.0264, Train Accuracy: 99.12, Test Accuracy: 97.14
+      Epoch 18, Loss: 0.0305, Train Accuracy: 98.99, Test Accuracy: 96.92
+      Epoch 19, Loss: 0.0215, Train Accuracy: 99.28, Test Accuracy: 97.51
+      Epoch 20, Loss: 0.0275, Train Accuracy: 99.08, Test Accuracy: 97.24
+      Final Train Accuracy: 99.08
+      Final Test Accuracy: 97.24
+      Training Complete!
+
+      ![alt text](image.png)
+      ![alt text](image-1.png)
 
 
 5.	Performance:
